@@ -1,0 +1,16 @@
+<div class="chart-container">
+  <h2>StackOverflow Survey 2020/2021</h2>
+  <h3 class="subtitles">Professional Developers / Most Popular Technologies</h3>
+  <ngx-charts-area-chart-stacked
+  [legend]="legend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [timeline]="timeline"
+  [results]="multi"
+  (select)="onSelect($event)">
+</ngx-charts-area-chart-stacked>
+</div>

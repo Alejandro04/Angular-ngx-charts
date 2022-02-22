@@ -2,13 +2,12 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Subject } from 'rxjs';
-import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProjectService {
-  private url: any = environment.apiProjectUrl;
+  private url: string = "https://ddp-challenge.azurewebsites.net";
   private action = new Subject<string>();
   public actionObservable = this.action.asObservable();
 

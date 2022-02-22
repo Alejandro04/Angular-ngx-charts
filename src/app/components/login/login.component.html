@@ -1,10 +1,18 @@
 <div class="login-form">
   <mat-card>
     <h2 class="login-title">Dalog challenge</h2>
-   <div class="login-acces-container">
-    <p class="login-span-text"> <span style="font-weight: bold;">user:</span> admin@admin.com</p>
-    <p class="login-span-text"><span style="font-weight: bold;">password:</span> 12345678</p>
-   </div>
+    <div class="lg-container">
+      <div class="login-acces-container">
+        <p class="login-span-text">All privileges</p>
+        <p class="login-span-text"> <span style="font-weight: bold;">user:</span> admin@admin.com</p>
+        <p class="login-span-text"><span style="font-weight: bold;">password:</span> 12345678</p>
+      </div>
+      <div class="login-acces-container">
+        <p class="login-span-text">ReadOnly privileges</p>
+        <p class="login-span-text"> <span style="font-weight: bold;">user:</span> qa@qa.com</p>
+        <p class="login-span-text"><span style="font-weight: bold;">password:</span> 12345678</p>
+      </div>
+    </div>
     <div class="errorSpan" *ngIf="typeError">
       {{ messageError }}
     </div>
@@ -13,8 +21,7 @@
         <input type="text" formControlName="email" class="form-control" name="email" placeholder="Email">
       </div>
       <div class="form-group">
-        <input type="password" formControlName="password" class="form-control" name="password"
-          placeholder="Password">
+        <input type="password" formControlName="password" class="form-control" name="password" placeholder="Password">
       </div>
       <div class="btn-action-container">
         <button class="btn btn-primary" (click)="login()">Login</button>

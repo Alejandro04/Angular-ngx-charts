@@ -27,7 +27,7 @@
 
     <div class="btn-actions">
       <a class="btn btn-secondary" [routerLink]="['/dashboard']" mat-button>Back</a>
-      <button class="btn btn-info" (click)="createProject(contentCreate)">Create project</button>
+      <button *ngIf="admin" class="btn btn-info" (click)="createProject(contentCreate)">Create project</button>
     </div>
 
     <div class="material-table-container mat-elevation-z8">

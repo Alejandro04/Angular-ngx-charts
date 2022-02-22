@@ -15,6 +15,7 @@ export class AuthenticationService {
   public token: any;
   private token$ = new BehaviorSubject<string>('');
   public isloggedIn: boolean = false;
+  public isAdmin: boolean = false;
 
   constructor(
     private http: HttpClient, 
@@ -46,6 +47,9 @@ export class AuthenticationService {
   }
 
   public login(user: User): Observable<any> {
+    if(user.email === 'admin@admin.com'){
+      this.isAdmin = true;
+    }
     return this.http.post(`${this.url}/api/login`, user).pipe(
       map((data: any) => {
         this.isloggedIn = true;

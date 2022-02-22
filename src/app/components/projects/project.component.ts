@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { SelectionModel } from '@angular/cdk/collections';
+import { AuthenticationService } from '../../services/auth.services';
 
 @Component({
   selector: 'app-project',
@@ -48,14 +49,18 @@ export class ProjectComponent {
   public pageSize: number = 20;
   public maxPage: number = 20;
   public page: number = 1;
+  public admin: boolean = false;
 
   constructor(
     private service: ProjectService,
     private formBuilder: FormBuilder,
-    private modalService: NgbModal
-  ) { }
+    private modalService: NgbModal,
+    public authService: AuthenticationService
+  ) {}
 
   ngOnInit() {
+    if (this.authService.isAdmin) { this.admin = true }
+
     this.configForm();
     this.getProjects();
     const action = this.service.getAction();

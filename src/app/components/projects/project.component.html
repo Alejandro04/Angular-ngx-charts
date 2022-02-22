@@ -1,9 +1,5 @@
 <div class="container">
-
-  <div *ngIf="dataInactive" class="spinnerContainer">
-    Loading...
-  </div>
-
+  <mat-spinner *ngIf="dataInactive" class="spinnerContainer"></mat-spinner>
   <div [hidden]="dataInactive">
     <div style="position: absolute; width: 100%;">
       <ngb-alert *ngIf="showAlertCreate">
@@ -29,6 +25,7 @@
     <h3 class="title-component">Projects</h3>
 
     <div class="btn-actions">
+      <a class="btn btn-secondary" [routerLink]="['/dashboard']" mat-button>Back</a>
       <button class="btn btn-info" (click)="createProject(contentCreate)">Create project</button>
     </div>
 

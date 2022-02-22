@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProjectCustomActionComponent } from './components/projects/custom-action/custom-action.component';
 import { ProjectComponent } from './components/projects/project.component';
+import { NavComponent } from './components/nav/nav.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -36,7 +37,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     DashboardComponent,
     ProjectCustomActionComponent,
     ProjectComponent,
-    ChartComponent
+    ChartComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

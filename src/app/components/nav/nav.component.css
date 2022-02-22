@@ -1,0 +1,10 @@
+.nav-container{
+    display: flex;
+    position: sticky;
+    background-color: #3f51b5;
+    color: #fff;
+}
+
+a:hover{
+    color: #fff;
+}

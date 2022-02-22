@@ -41,8 +41,7 @@ export class LoginComponent {
         },
         (error) => {
           this.typeError = true;
-          // para personalizar por tipo de error, se debe hacer una funcion que parametrize eso.
-          this.messageError = "Email o contraseña incorrecta, por favor contacte a soporte";
+          this.messageError = "Email or password incorrect";
         }
       );
     }

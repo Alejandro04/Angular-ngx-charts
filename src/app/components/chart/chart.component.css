@@ -1,0 +1,16 @@
+.chart-container {
+  width: 80%;
+  margin: auto;
+  height: 400px;
+  text-align: center;
+}
+
+.subtitles {
+  font-weight: 100;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    width: 100%;
+  }
+}

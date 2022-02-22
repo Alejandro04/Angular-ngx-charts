@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProjectCustomActionComponent } from './components/projects/custom-action/custom-action.component';
 import { ProjectComponent } from './components/projects/project.component';
+import { ChartComponent } from './components/chart/chart.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
@@ -26,6 +27,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "./interceptors/auth-interceptor";
 import { DecimalPipe } from "@angular/common";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     LoginComponent,
     DashboardComponent,
     ProjectCustomActionComponent,
-    ProjectComponent
+    ProjectComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatProgressSpinnerModule,
     MatTableModule,
     MatCheckboxModule,
-    NgbModule
+    NgbModule,
+    NgxChartsModule
   ],
   providers: [
     DecimalPipe,

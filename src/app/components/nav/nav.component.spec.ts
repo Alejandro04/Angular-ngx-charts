@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { NavComponent } from './nav.component';
 
-describe('AppComponent', () => {
+describe('NavComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [

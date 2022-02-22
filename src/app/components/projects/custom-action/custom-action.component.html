@@ -1,0 +1,10 @@
+<div style="margin-right: 20px;">
+  <ng-template #popContent>
+    <div style="text-align: left; z-index: 9999999;">
+      <div class="actionOption" (click)="executeAction('update')">Update</div>
+      <div class="actionOption" (click)="executeAction('delete')">Delete</div>
+    </div>
+  </ng-template>
+  <img src="assets/icons/more_vert-24px.svg" placement="left" alt="show more" [ngbPopover]="popContent"
+    popoverTitle="Actions" class="popoverIcon">
+</div>

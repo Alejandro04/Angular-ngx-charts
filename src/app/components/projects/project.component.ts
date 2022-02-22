@@ -9,11 +9,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'app-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.css']
 })
-export class MenuComponent {
+export class ProjectComponent {
   public closeResult = '';
   public contentUpdate: string;
   public contentCreate: string;
@@ -41,17 +41,7 @@ export class MenuComponent {
   public displayedColumns: string[] =
     [
       'select',
-      'nombre',
-      'icono',
-      'directorio',
-      'codigo',
-      'comando',
-      'key_parent',
-      'mostrar_en_menu',
-      'auxiliar_contable',
-      'orden',
-      'proceso',
-      'abre_proceso',
+      'description',
       'star'
     ];
   
@@ -67,48 +57,28 @@ export class MenuComponent {
 
   ngOnInit() {
     this.configForm();
-    this.getMenu();
+    this.getProjects();
     const action = this.service.getAction();
     action.subscribe((action:any) => this.executeAction(action));
   }
 
   configForm() {
     this.registerForm = this.formBuilder.group({
-      user_id: ["", [Validators.required]],
-      nombre: ["", [Validators.required]],
-      icono: ["", [Validators.required]],
-      directorio: ["", [Validators.required]],
-      codigo: ["", [Validators.required]],
-      comando: ["", [Validators.required]],
-      key_parent: ["", [Validators.required]],
-      mostrar_en_menu: ["", [Validators.required]],
-      auxiliar_contable: ["", [Validators.required]],
-      orden: ["", [Validators.required]],
-      proceso: ["", [Validators.required]],
-      abre_proceso: ["", [Validators.required]]
+      name: ["", [Validators.required]],
+      description: ["", [Validators.required]],
     });
 
     this.updateForm = this.formBuilder.group({
       id: ["", [Validators.required]],
-      user_id: ["", [Validators.required]],
-      nombre: ["", [Validators.required]],
-      icono: ["", [Validators.required]],
-      directorio: ["", [Validators.required]],
-      codigo: ["", [Validators.required]],
-      comando: ["", [Validators.required]],
-      key_parent: ["", [Validators.required]],
-      mostrar_en_menu: ["", [Validators.required]],
-      auxiliar_contable: ["", [Validators.required]],
-      orden: ["", [Validators.required]],
-      proceso: ["", [Validators.required]],
-      abre_proceso: ["", [Validators.required]]
+      name: ["", [Validators.required]],
+      description: ["", [Validators.required]],
     });
   }
 
-  public getMenu() {
+  public getProjects() {
     this.dataInactive = true;
     this.service.getProjects().pipe(take(1)).subscribe((data) => {
-      this.addDataToTable(data.menu)
+      this.addDataToTable(data)
       this.dataInactive = false;
     });
   }
@@ -135,48 +105,11 @@ export class MenuComponent {
     this.contentDelete = contentDelete;
   }
 
-  /** Angular Material Table Functions. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource && this.dataSource.data ? this.dataSource.data.length : 0;
-    return numSelected === numRows;
-  }
-
-  removeSelectedRows() {
-    // clean individual selected
-    this.selection.clear();
-
-    // clean all selected
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select());
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.claim_id + 1}`;
-  }
-
-  selectRecord($event: any, row: any, flag: any) {
-    $event.stopPropagation();
-  }
-
   /* Create project modal  */
   public createProject(contentCreate: any) {
-    this.modalService.open(contentCreate).result.then((result) => {
+    this.modalService.open(contentCreate).result.then((result:any) => {
       this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    }, (reason:any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
@@ -203,18 +136,9 @@ export class MenuComponent {
           this.modalService.dismissAll();
           setTimeout(() => { this.showAlertCreate = false }, 3000);
           this.dataSource.data = [...this.dataSource.data, {
-            id: data.menu.id,
-            nombre: data.menu.nombre,
-            icono: data.menu.icono,
-            directorio: data.menu.directorio,
-            codigo: data.menu.codigo,
-            comando: data.menu.comando,
-            key_parent: data.menu.key_parent,
-            mostrar_en_menu: data.menu.mostrar_en_menu,
-            auxiliar_contable: data.menu.auxiliar_contable,
-            orden: data.menu.orden,
-            proceso: data.menu.proceso,
-            abre_proceso: data.menu.abre_proceso
+            id: data.id,
+            name: data.name,
+            description: data.description
           }];
         },
         (error: any) => {
@@ -228,30 +152,21 @@ export class MenuComponent {
    /* Update project modal  */
    public updateProject() {
     this.updateForm.patchValue({ id: this.record.id });
-    this.updateForm.patchValue({ nombre: this.record.nombre });
-    this.updateForm.patchValue({ icono: this.record.icono });
-    this.updateForm.patchValue({ directorio: this.record.directorio });
-    this.updateForm.patchValue({ codigo: this.record.codigo });
-    this.updateForm.patchValue({ comando: this.record.comando });
-    this.updateForm.patchValue({ key_parent: this.record.key_parent });
-    this.updateForm.patchValue({ mostrar_en_menu: this.record.mostrar_en_menu });
-    this.updateForm.patchValue({ auxiliar_contable: this.record.auxiliar_contable });
-    this.updateForm.patchValue({ orden: this.record.orden });
-    this.updateForm.patchValue({ proceso: this.record.proceso });
-    this.updateForm.patchValue({ abre_proceso: this.record.abre_proceso });
+    this.updateForm.patchValue({ name: this.record.name });
+    this.updateForm.patchValue({ description: this.record.description });
 
-    this.modalService.open(this.contentUpdate).result.then((result) => {
+    this.modalService.open(this.contentUpdate).result.then((result:any) => {
       this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    }, (reason:any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
 
   /* Delete project modal  */
   public deleteProject() {
-    this.modalService.open(this.contentDelete).result.then((result) => {
+    this.modalService.open(this.contentDelete).result.then((result:any) => {
       this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
+    }, (reason:any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }

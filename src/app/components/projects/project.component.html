@@ -1,0 +1,143 @@
+<div class="container">
+
+  <div *ngIf="dataInactive" class="spinnerContainer">
+    Loading...
+  </div>
+
+  <div [hidden]="dataInactive">
+    <div style="position: absolute; width: 100%;">
+      <ngb-alert *ngIf="showAlertCreate">
+        Project successfully created.
+      </ngb-alert>
+      <ngb-alert *ngIf="showAlertUpdate">
+        Project successfully updated.
+      </ngb-alert>
+      <ngb-alert *ngIf="showAlertDelete">
+        Project successfully deleted.
+      </ngb-alert>
+      <ngb-alert type="danger" *ngIf="showAlertErrorCreate">
+        {{errorMsg}}.
+      </ngb-alert>
+      <ngb-alert type="danger" *ngIf="showAlertErrorUpdate">
+        {{errorMsg}}.
+      </ngb-alert>
+      <ngb-alert type="danger" *ngIf="showAlertErrorDelete">
+        {{errorMsg}}.
+      </ngb-alert>
+    </div>
+
+    <h3 class="title-component">Projects</h3>
+
+    <div class="btn-actions">
+      <button class="btn btn-info" (click)="createProject(contentCreate)">Create project</button>
+    </div>
+
+    <div class="material-table-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort class="table-project">
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select" sticky>
+          <th mat-header-cell *matHeaderCellDef>
+            Name
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{row.name}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Description </th>
+          <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.description}} </td>
+        </ng-container>
+
+        <!-- Star Column -->
+        <ng-container matColumnDef="star" stickyEnd>
+          <th [ngClass]="'w-25'" mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" width="10"
+            (click)="sendRecordToCustomAction(element, contentCreate, contentUpdate, contentDelete)">
+            <custom-action-project-component>
+            </custom-action-project-component>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Crete project modal  -->
+  <ng-template #contentCreate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create project</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="registerForm">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" formControlName="name" placeholder="Name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" formControlName="description" placeholder="Description" class="form-control">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="saveProject()">Save</button>
+    </div>
+  </ng-template>
+
+  <!-- Update project modal  -->
+  <ng-template #contentUpdate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Update project</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="updateForm">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" formControlName="name" placeholder="Name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" formControlName="description" placeholder="Description" class="form-control">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="updateDataProject()">Update</button>
+    </div>
+  </ng-template>
+
+  <!-- Delete project modal  -->
+  <ng-template #contentDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete project</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        Do you agree to eliminate the Project
+        <span class="text-strong">{{ record.name }}</span> ?
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn" (click)="modal.close('Save click')">No</button>
+      <button type="button" class="btn btn-info" (click)="deleteDataProject()">Yes</button>
+    </div>
+  </ng-template>
+</div>

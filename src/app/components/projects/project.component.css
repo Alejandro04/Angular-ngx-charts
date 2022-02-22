@@ -1,9 +1,10 @@
 .spinnerContainer {
     margin: auto !important;
     margin-top: 120px !important;
+    text-align: center;
 }
 
-.table-menu {
+.table-project {
     overflow-x: scroll;
     width: 100%;
 }

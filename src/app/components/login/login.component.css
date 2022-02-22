@@ -1,0 +1,30 @@
+.login-form{
+    margin: auto;
+    margin-top: 200px;
+}
+.form-control{
+    margin: 10px;
+    width: 98%;
+}
+.btn-action-container{
+    display: flex;
+    justify-content: flex-end;
+}
+.login-title{
+    text-align: center;
+}
+.errorSpan{
+    color: red;
+    text-align: center;
+}
+@media (min-width: 768px) {
+    .login-form{
+        width: 40%;
+    }
+}
+@media (max-width: 768px) {
+    .login-form{
+        width: 90%;
+    }
+}
+

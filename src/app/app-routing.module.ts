@@ -14,17 +14,17 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    //   canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'chart',
     component: ChartComponent,
-    //   canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'projects',
     component: ProjectComponent,
-    //  canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -1,30 +1,44 @@
-.login-form{
+.login-form {
     margin: auto;
     margin-top: 200px;
 }
-.form-control{
+
+.form-control {
     margin: 10px;
     width: 98%;
 }
-.btn-action-container{
+
+.btn-action-container {
     display: flex;
     justify-content: flex-end;
 }
-.login-title{
+
+.login-title {
     text-align: center;
 }
-.errorSpan{
+
+.errorSpan {
     color: red;
     text-align: center;
 }
+
+.login-acces-container {
+    text-align: center;
+}
+
+.login-span-text {
+    margin: 0;
+    padding: 0;
+}
+
 @media (min-width: 768px) {
-    .login-form{
+    .login-form {
         width: 40%;
     }
 }
+
 @media (max-width: 768px) {
-    .login-form{
+    .login-form {
         width: 90%;
     }
 }
-

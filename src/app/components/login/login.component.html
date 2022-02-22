@@ -1,6 +1,10 @@
 <div class="login-form">
   <mat-card>
     <h2 class="login-title">Dalog challenge</h2>
+   <div class="login-acces-container">
+    <p class="login-span-text"> <span style="font-weight: bold;">user:</span> admin@admin.com</p>
+    <p class="login-span-text"><span style="font-weight: bold;">password:</span> 12345678</p>
+   </div>
     <div class="errorSpan" *ngIf="typeError">
       {{ messageError }}
     </div>

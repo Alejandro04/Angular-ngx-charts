@@ -11,7 +11,7 @@ import { BehaviorSubject } from "rxjs";
   providedIn: "root",
 })
 export class AuthenticationService {
-  private url: string = "dummyurl"
+  private url: string = "https://veterinaria-auth-demo.vercel.app"
   public token: any;
   private token$ = new BehaviorSubject<string>('');
   public isloggedIn: boolean = false;
@@ -23,10 +23,8 @@ export class AuthenticationService {
   }
 
   public saveToken(data: any): void {
-    this.token = data.access_token;
-    localStorage.setItem("token", data.access_token);
-    localStorage.setItem("name", data.user.name);
-    localStorage.setItem("user_id", data.user.id )
+    this.token = data;
+    localStorage.setItem("token", data);
   }
 
   public getTokenUser(): any {
@@ -48,7 +46,7 @@ export class AuthenticationService {
   }
 
   public login(user: User): Observable<any> {
-    return this.http.post(`${this.url}/api/auth/login`, user).pipe(
+    return this.http.post(`${this.url}/api/login`, user).pipe(
       map((data: any) => {
         this.isloggedIn = true;
         this.saveToken(data);

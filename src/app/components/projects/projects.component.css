@@ -1,0 +1,58 @@
+.spinnerContainer {
+    margin: auto !important;
+    margin-top: 120px !important;
+}
+
+.table-menu {
+    overflow-x: scroll;
+    width: 100%;
+}
+
+.title-component {
+    padding: 20px;
+    text-align: center;
+    padding-top: 80px;
+}
+
+.mat-elevation-z8 {
+    margin: 20px;
+}
+
+.btn-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+}
+
+.text-strong {
+    font-weight: bolder;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.mat-table {
+    overflow-x: scroll !important;
+}
+
+.mat-header-cell {
+    min-width: 160px !important;
+    padding: 5px;
+}
+
+.mat-cell {
+    padding: 5px;
+}
+.mat-drawer-content.mat-sidenav-content{
+    overflow: hidden !important;
+}
+.material-table-container.mat-elevation-z8{
+    overflow: scroll !important;
+}

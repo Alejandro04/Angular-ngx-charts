@@ -1,0 +1,288 @@
+<mat-spinner *ngIf="dataInactive" class="spinnerContainer"></mat-spinner>
+<div [hidden]="dataInactive">
+
+  <div style="position: absolute; width: 100%;">
+    <ngb-alert *ngIf="showAlertCreate">
+      Menú creado exitosamente.
+    </ngb-alert>
+    <ngb-alert *ngIf="showAlertUpdate">
+      Menú actualizado exitosamente.
+    </ngb-alert>
+    <ngb-alert *ngIf="showAlertDelete">
+      Menú eliminado exitosamente.
+    </ngb-alert>
+    <ngb-alert type="danger" *ngIf="showAlertErrorCreate">
+      {{errorMsg}}.
+    </ngb-alert>
+    <ngb-alert type="danger" *ngIf="showAlertErrorUpdate">
+      {{errorMsg}}.
+    </ngb-alert>
+    <ngb-alert type="danger" *ngIf="showAlertErrorDelete">
+      {{errorMsg}}.
+    </ngb-alert>
+  </div>
+
+  <h3 class="title-component">Menú</h3>
+
+  <div class="btn-actions">
+    <button class="btn btn-info" (click)="createMenu(contentCreate)">Crear Menú</button>
+  </div>
+
+  <div class="material-table-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="table-menu">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select" sticky>
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+          ID
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="selectRecord($event, row, checkboxLabel(row))"
+            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+          {{row.id}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Nombre </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.nombre}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="icono">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Icono </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.icono}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="directorio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Directorio </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.directorio}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Código </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.codigo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="comando">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Comando </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.comando}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="key_parent">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Key Parent </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.key_parent}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="mostrar_en_menu">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Mostrar en menú </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.mostrar_en_menu}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="auxiliar_contable">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Auxiliar contable
+        </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.auxiliar_contable}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="orden">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Ordén </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.orden}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="proceso">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Proceso </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.proceso}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="abre_proceso">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Abre proceso </th>
+        <td mat-cell *matCellDef="let row" style="padding-left: 15px;"> {{row.abre_proceso}} </td>
+      </ng-container>
+
+      <!-- Star Column -->
+      <ng-container matColumnDef="star" stickyEnd>
+        <th [ngClass]="'w-25'" mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" width="10"
+          (click)="sendRecordToCustomAction(element, contentCreate, contentUpdate, contentDelete)">
+          <custom-action-menu-component>
+          </custom-action-menu-component>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- Crear menu modal  -->
+<ng-template #contentCreate let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Crear Menú</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="registerForm">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="icono" placeholder="Icono" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="directorio" placeholder="Directorio" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="codigo" placeholder="Código" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="comando" placeholder="Comando" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="key_parent" placeholder="Key parent" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="mostrar_en_menu" placeholder="Mostrar en menú" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="auxiliar_contable" placeholder="Auxiliar contable" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="orden" placeholder="Orden" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="proceso" placeholder="Proceso" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="abre_proceso" placeholder="Abre proceso" class="form-control">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="saveMenu()">Guardar</button>
+  </div>
+</ng-template>
+
+<!-- Actualizar menu modal  -->
+<ng-template #contentUpdate let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Actualizar Menú</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="updateForm">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="icono" placeholder="Icono" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="directorio" placeholder="Directorio" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="codigo" placeholder="Código" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="comando" placeholder="Comando" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="key_parent" placeholder="Key parent" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="mostrar_en_menu" placeholder="Mostrar en menú" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="auxiliar_contable" placeholder="Auxiliar contable" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="orden" placeholder="Orden" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="proceso" placeholder="Proceso" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" formControlName="abre_proceso" placeholder="Abre proceso" class="form-control">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="updateDataMenu()">Actualizar</button>
+  </div>
+</ng-template>
+
+<!-- Eliminar menu modal  -->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Eliminar Menú</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="updateForm">
+      <div class="form-group">
+        Estas de acuerdo en eliminar el Menú
+        <span class="text-strong">{{ record.nombre }}</span> ?
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" (click)="modal.close('Save click')">No</button>
+    <button type="button" class="btn btn-info" (click)="deleteDataMenu()">Si</button>
+  </div>
+</ng-template>

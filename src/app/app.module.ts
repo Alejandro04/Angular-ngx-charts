@@ -9,6 +9,7 @@ import { ProjectCustomActionComponent } from './components/projects/custom-actio
 import { ProjectComponent } from './components/projects/project.component';
 import { NavComponent } from './components/nav/nav.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { MonitoringComponent } from './components/monitoring/monitoring.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
@@ -38,7 +39,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ProjectCustomActionComponent,
     ProjectComponent,
     ChartComponent,
-    NavComponent
+    NavComponent,
+    MonitoringComponent
   ],
   imports: [
     BrowserModule,

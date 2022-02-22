@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ChartComponent } from './components/chart/chart.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
+import { MonitoringComponent } from './components/monitoring/monitoring.component';
 import { ProjectComponent } from './components/projects/project.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -25,6 +26,11 @@ const routes: Routes = [
     path: 'projects',
     component: ProjectComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'monitoring',
+    component: MonitoringComponent,
+ //   canActivate: [AuthGuard]
   }
 ];
 

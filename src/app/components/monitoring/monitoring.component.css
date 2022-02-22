@@ -7,10 +7,10 @@
     padding-bottom: 100px;
 }
 
-.table-project {
+.table-m {
     overflow-x: scroll;
-    width: 100%;
-    margin-bottom: 50px;
+    width: 60%;
+    margin: auto;
 }
 
 .title-component {

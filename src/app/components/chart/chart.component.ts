@@ -1,7 +1,8 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { multi } from './data';
+import { ChartService } from '../../services/chart.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chart',
@@ -9,8 +10,14 @@ import { multi } from './data';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent {
-  multi: any[] = [];
-  view: number[] = [700, 300];
+
+  // Chart procceses:
+  // First: create an variable chartDataFront for the view
+  // After: the chartDataFront variable, should be create again like static variable
+  // on tansFormData function
+  // After: implement Object.assign function to chartDatFront
+  chartDataFront: any[] = [];
+  view: number[] = [1000000000];
 
   // options
   legend: boolean = true;
@@ -20,16 +27,42 @@ export class ChartComponent {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Year';
   yAxisLabel: string = 'Population';
   timeline: boolean = true;
+  public dataInactive: boolean = false;
+  public chartData: any[] = [
+    {
+      "name": "dataPoints", 
+      "series": []
+    }
+  ];
 
-  colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-  };
+  constructor(private service: ChartService,) {
+   //
+  }
 
-  constructor() {
-    Object.assign(this, { multi });
+  ngOnInit() {
+    this.getData();
+  }
+
+  public getData() {
+    this.dataInactive = true;
+    this.service.getData().pipe(take(1)).subscribe((data: any) => {
+      this.transformData(data);
+    });
+  }
+
+  public transformData(data: any) {
+    data.dataPoints.forEach((element: { value: any; timeStamp: any; }) => {
+      this.chartData[0].series.push({
+        value: element.value,
+        name: element.timeStamp
+      })
+    });
+
+    let chartDataFront = this.chartData
+    Object.assign(this, { chartDataFront });
+    this.dataInactive = false;
   }
 
   onSelect(event: any) {

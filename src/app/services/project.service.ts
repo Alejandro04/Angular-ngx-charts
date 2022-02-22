@@ -8,7 +8,7 @@ import { environment } from "../../environments/environment";
   providedIn: "root",
 })
 export class ProjectService {
-  private url: string = environment.apiProjectUrl;
+  private url: any = environment.apiProjectUrl;
   private action = new Subject<string>();
   public actionObservable = this.action.asObservable();
 
